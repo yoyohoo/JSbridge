@@ -73,10 +73,10 @@
  * Wap
  */
 (function () {
-    this.WeixinJSBridge = {},
+    this.WXbridge = {},
         ua = navigator.userAgent.toUpperCase();
 
-    this.WeixinJSBridge.IS_WX = ua.indexOf('MICROMESSENGER') != -1;
+    this.WXbridge.IS_WX = ua.indexOf('MICROMESSENGER') != -1;
 })();
 
 /**
@@ -186,7 +186,7 @@
     };
 
 
-    if (WeixinJSBridge) {
+    if (WXbridge.IS_WX) {
         platform = 'wx';
         Object.assign(JSbridge, WeixinJSBridge);
     } else {
