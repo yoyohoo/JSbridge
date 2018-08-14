@@ -103,8 +103,11 @@
             name = args[0],
             params = Array.prototype.slice.call(args, 1),
             fn = this.name || this[name];
-        typeof fn === 'function' &&
+        if (typeof fn === 'function') {
             fn.call(this, params);
+        } else {
+            console.error('不支持该方法：' + name)
+        }
     }
 
     /**
@@ -182,22 +185,6 @@
         return target;
     };
 
-    /**
-     * 封装call：支持降级匹配
-     */
-    JSbridge.call = function () {
-        let args = arguments,
-            name = args[0],
-            params = Array.prototype.slice.call(args, 1),
-            fn = JSbridge[name];
-        if (typeof fn === 'function') {
-            fn.call(this, params);
-        } else {
-            console.info('[info]:', `平台${platform}不存在此函数：${name}，尝试降级寻找匹配函数：${name}，请稍后...`);
-            log(`平台${platform}不存在此函数：${name}，尝试降级寻找匹配函数：${name}，请稍后...`)
-            Wap.call(name, params);
-        }
-    };
 
     if (this.isWX) {
         platform = 'wx';
@@ -213,6 +200,26 @@
             })
         } catch (ex) { }
     }
+
+    /**
+     * 封装call：支持降级匹配
+     */
+    JSbridge.call = function () {
+        let args = arguments,
+            name = args[0],
+            params = Array.prototype.slice.call(args, 1),
+            fn = JSbridge[name];
+        if (typeof fn === 'function') {
+            fn.call(this, params);
+        } else if (platform !== 'wap') {
+            console.info('[info]:', `平台${platform}不存在此函数：${name}，尝试降级寻找匹配函数：${name}，请稍后...`);
+            log(`平台${platform}不存在此函数：${name}，尝试降级寻找匹配函数：${name}，请稍后...`)
+            Wap.call(name, params);
+        } else {
+            console.error('不支持该方法：' + name)
+            log('不支持该方法：' + name)
+        }
+    };
 
     JSbridge.extend({
         version: version,

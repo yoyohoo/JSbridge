@@ -54,12 +54,14 @@
                 txt = document.getElementById('txt'),
                 btn = document.getElementById('btn');
 
-            pt.innerText = JSbridge.getPlatform();
+            setTimeout(() => {
+                pt.innerText = JSbridge.getPlatform();
+            }, 3000)
             btn.addEventListener('click', function () {
                 JSbridge.call('setTitle', txt.value)
             })
             pa.addEventListener('click', function () {
-                App.call('getPasession', function (res) {
+                JSbridge.call('getPasession', function (res) {
                     alert(res);
                 })
             })
