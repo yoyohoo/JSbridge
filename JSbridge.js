@@ -188,7 +188,7 @@
 
     if (WXbridge.IS_WX) {
         platform = 'wx';
-        Object.assign(JSbridge, WeixinJSBridge);
+        Object.assign(JSbridge, window.WeixinJSBridge);
     } else {
         platform = 'wap';
         Object.assign(JSbridge, Wap);
