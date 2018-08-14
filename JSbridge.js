@@ -125,7 +125,7 @@
 /**
  * JSbridge
  */
-(function (wd) {
+(function () {
 
     /**
      * 变量定义
@@ -186,17 +186,17 @@
     };
 
 
-    if (this.isWX) {
+    if (WeixinJSBridge) {
         platform = 'wx';
-        Object.assign(JSbridge, wd.WeixinJSBridge);
+        Object.assign(JSbridge, WeixinJSBridge);
     } else {
         platform = 'wap';
-        Object.assign(JSbridge, wd.Wap);
+        Object.assign(JSbridge, Wap);
         try {
             App.call('isPamo', function (res) {
                 res
                     && (platform = 'klpa')
-                    && Object.assign(JSbridge, wd.App);
+                    && Object.assign(JSbridge, App);
             })
         } catch (ex) { }
     }
@@ -230,4 +230,4 @@
 
     return JSbridge;
 
-})(window);
+})();
