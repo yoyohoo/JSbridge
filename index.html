@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JSbridge测试</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        section {
+            padding: 5%;
+        }
+
+        section #txt,
+        section button {
+            height: 2rem;
+            line-height: 1.8rem;
+            margin: .5rem auto;
+            width: 90%;
+        }
+    </style>
+    <script src="JSbridge.js"></script>
+</head>
+
+<body>
+    <header>
+        <h3>API 测试</h3>
+    </header>
+    <section>
+        <p>当前平台：<span id="pt"></span></p>
+        <input id="txt" type="text" name="" value="请输入新标题">
+        <button id="btn" type="">修改标题</button>
+
+    </section>
+    <section>
+        <button id="pa">获取pasession</button>
+    </section>
+    <section>
+        <p>日志记录：<span id="log"></span></p>
+    </section>
+    <script>
+        window.onload = function () {
+            document.scripts[0].src += Math.random();
+            window.log = function (txt) {
+                log.innerHTML += '<br>$： ' + txt
+            }
+
+            var pt = document.getElementById('pt'),
+                log = document.getElementById('log'),
+                pa = document.getElementById('pa'),
+                txt = document.getElementById('txt'),
+                btn = document.getElementById('btn');
+
+            pt.innerText = JSbridge.getPlatform();
+            btn.addEventListener('click', function () {
+                JSbridge.call('setTitle', txt.value)
+            })
+            pa.addEventListener('click', function () {
+                App.call('getPasession', function (res) {
+                    alert(res);
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
